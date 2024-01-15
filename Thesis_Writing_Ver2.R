@@ -1066,3 +1066,35 @@ summary(ivreg(logduration ~ WagedistCPI + logUICPI | WagedistCPI + WagedistCPI*t
 summary(ivreg(logduration ~ WagedistCPI + logUICPI | WagedistCPI + WagedistCPI*treatment, data = TKpostreformFirstCPI))
 #####
 #####
+
+##### BK2021 analysis
+#####
+
+#Figure A26
+rdplot(BK2021$AvgUIB, BK2021$Wagedist,p=2,
+       y.label = "Average UI benefits", x.label = "Daily Wage Relative to Floor", 
+       title = "Figure A26: Daily UIB Benefits 2021 Bottom Kink", masspoints=0)
+rdplot(BKpostreform2021$logduration, BKpostreform2021$Wagedist,p=2,
+       y.label = "Log Unemployment Duration", x.label = "Daily Wage Relative to Floor", 
+       title = "Figure A27: Length of Unemployment 2021 Bottom Kink")
+
+summary(rdrobust(BKpostreform2021$logUI, BKpostreform2021$Wagedist, c = 0, deriv=TRUE, p = 1, 
+                 kernel = "uniform", masspoints = "off", all = TRUE)) 
+summary(rdrobust(BKpostreform2021$logduration, BKpostreform2021$Wagedist, c = 0, deriv=TRUE, p = 1, 
+                 kernel = "uniform", masspoints = "off", all = TRUE)) # 1.995 linear bw. Significant at 5% level
+
+rdplot(BKpostreform2021$gendermale, BKpostreform2021$Wagedist, c=0,p=2,
+       y.label="% Male", x.label = "Daily Wage Relative to Floor", title = "Figure A28: Distribution of Gender, 2021 Bottom Kink ")
+rdplot(BKpostreform2021$Blue, BKpostreform2021$Wagedist, c=0,p=2,
+       y.label="% Bluecollar", x.label = "Daily Wage Relative to Floor", title = "Figure A29: % of Bluecollar, 2021 Bottom Kink ")
+rdplot(BKpostreform2021$Edu, BKpostreform2021$Wagedist, c=0, 
+       y.label="Years of education", x.label = "Daily Wage Relative to Floor", title = "Figure A30: Avg Education Length, 2021 BK")
+rdplot(BKpostreform2021$age, BKpostreform2021$Wagedist,p=2,
+       y.label = "Age", x.label = "Daily Wage Relative to Floor", 
+       title = "Figure A31: Avg Age, 2021 Bottom Kink")
+rdplot(BKpostreform2021$uib_days_appointed, BKpostreform2021$Wagedist,
+       y.label = "Maximum days of UI", x.label = "Daily Wage Relative to Floor", 
+       title = "Figure A32: Maximum UI Days 2021 Bottom Kink")
+
+#####
+#####
